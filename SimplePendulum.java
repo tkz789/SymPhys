@@ -5,7 +5,7 @@ import static java.lang.Math.*;
 /**
  * Mathematical pendulum with small angle approximation
  */
-public class SimplePendulum {
+public class SimplePendulum extends Pendulum{
 
     double length, gravity, initial_angle = 0.1, initial_velocity = 0;
     double omega;
