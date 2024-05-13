@@ -18,9 +18,9 @@ public class AnimationGivenForce {
         stage.show();
         stage.setResizable(false);
         AnimationTimer animation = new AnimationTimer() {
-            final PositionCalculator a = new PositionCalculator((x,v,t) -> new Point2D.Double(x.getX()*0.0001,-x.getY()*0.0001),
-                    new Point2D.Double(1, 0),
-                    new Point2D.Double(0, 100),
+            final PositionCalculator a = new PositionCalculator((x,v,t) -> new Point2D.Double(-x.getX()*0.0001 - v.getX()*0.1,-x.getY()*0.0001 - v.getY()*0.1),
+                    new Point2D.Double(2, 0),
+                    new Point2D.Double(0, 150),
                     1);
 
             @Override

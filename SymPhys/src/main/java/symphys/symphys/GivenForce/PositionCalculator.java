@@ -1,18 +1,15 @@
 package symphys.symphys.GivenForce;
 
 import java.awt.geom.Point2D;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
-;
 
 public class PositionCalculator {
 
-    double mass;
-    Point2D.Double v0, x0, Fi, vi, xi;
+    private final double mass;
+    private final Point2D.Double v0;
+    private final Point2D.Double x0;
+    private Point2D.Double vi;
+    private Point2D.Double xi;
 
     TriFunction<Point2D.Double, Point2D.Double, Double, Point2D.Double> force;
     public PositionCalculator(TriFunction<Point2D.Double, Point2D.Double, Double, Point2D.Double> force, Point2D.Double v0, Point2D.Double x0, double mass){
@@ -21,9 +18,9 @@ public class PositionCalculator {
         this.v0 = v0;
         this.x0 = x0;
     }
-    long first = 0;
-    static double Dt = 0.001;
-    long last;
+    private long first = 0;
+    private static final double Dt = 0.001;
+    private long last;
     public Point2D.Double getForce(Point2D.Double x, Point2D.Double v, Double t){
         return force.apply(x, v, t);
     }
@@ -42,7 +39,7 @@ public class PositionCalculator {
 //            Fi = force.apply(x0, v0, 0.);
             return x0;
         }
-        for (int i = 0; i < time - last; ++i){
+        for (int i = 0; i < time - last; i++){
             Point2D.Double v = calculateVelocity(time-first);
             xi = new Point2D.Double(xi.getX() + (v.getX() + vi.getX())/2 * Dt,
                                     xi.getY() + (v.getY() + vi.getY())/2 * Dt);
