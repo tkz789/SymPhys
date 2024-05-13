@@ -35,6 +35,7 @@ public class Main {
 
 
     public static class Test2 {
+        public static boolean paused=true;
         static GraphicsHandler graphicsHandler;
         public static Simulation simulation = new Simulation(4);
         static Timeline timeline;
@@ -53,10 +54,17 @@ public class Main {
             }));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
+            paused = false;
         }
         public static void pauseSimulation() {
-            if (timeline==null) return;
-            timeline.stop();
+            if ((timeline==null)||paused) return;
+            timeline.pause();
+            paused = true;
+        }
+        public static void unpauseSimulation() {
+            if ((!paused)||(timeline==null)) return;
+            timeline.play();
+            paused = false;
         }
     }
 }
