@@ -18,13 +18,16 @@ public class AnimationGivenForce {
         stage.show();
         stage.setResizable(false);
         AnimationTimer animation = new AnimationTimer() {
-            final PositionCalculator a = new PositionCalculator();
+            final PositionCalculator a = new PositionCalculator((x,v,t) -> new Point2D.Double(x.getX()*0.0001,-x.getY()*0.0001),
+                    new Point2D.Double(1, 0),
+                    new Point2D.Double(0, 100),
+                    1);
 
             @Override
             public void handle(long l) {
-                Point2D.Double newPosition = a.getNextPosition();
-                circle.setCenterX(200 + newPosition.getX() * 100);
-                circle.setCenterY(200 + newPosition.getY() * 100);
+                Point2D.Double newPosition = a.getNextPosition(l);
+                circle.setCenterX(200 + newPosition.getX());
+                circle.setCenterY(200 + newPosition.getY());
             }
         };
         animation.start();
