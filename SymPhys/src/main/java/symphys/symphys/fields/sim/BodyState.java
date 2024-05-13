@@ -6,7 +6,7 @@ public class BodyState {
     public Body body;
     public Wektor position=new Wektor(), velocity =new Wektor();
 
-    BodyState(Body body) {
+    public BodyState(Body body) {
         this.body = body;
     }
 

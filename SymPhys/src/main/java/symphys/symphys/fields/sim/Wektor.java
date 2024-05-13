@@ -5,7 +5,7 @@ import static java.lang.Math.sqrt;
 public class Wektor {
     private double x=0, y=0;
     Wektor() {}
-    Wektor(double x, double y) {
+    public Wektor(double x, double y) {
         this.x = x;
         this.y = y;
     }
