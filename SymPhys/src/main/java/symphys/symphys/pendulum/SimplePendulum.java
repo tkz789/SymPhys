@@ -1,3 +1,5 @@
+package symphys.symphys.pendulum;
+
 import java.awt.geom.Point2D;
 import static java.lang.Math.*;
 
@@ -7,15 +9,16 @@ import static java.lang.Math.*;
  */
 public class SimplePendulum extends Pendulum{
 
-    double length, gravity, initial_angle = 0.1, initial_velocity = 0;
+    double length, gravity, initial_angle, initial_velocity = 0;
     double omega;
-    SimplePendulum(double length, double gravity){
+    SimplePendulum(double length, double gravity, double initial_angle){
         this.gravity = gravity;
         this.length = length;
+        this.initial_angle = initial_angle;
         omega = sqrt(gravity/length);
     }
     SimplePendulum(double length){
-        this(length, 9.81);
+        this(length, 9.81, 0.1);
     }
 
     public double angle(double time){
@@ -25,7 +28,7 @@ public class SimplePendulum extends Pendulum{
     public Point2D.Double position(double time){
         double theta = angle(time);
         double x = length * sin(theta);
-        double y = -length * cos(theta);
+        double y = length * cos(theta);
         return new Point2D.Double(x, y);
     }
 }
