@@ -1,11 +1,18 @@
 package symphys.symphys.fields.sim;
 
 public class Simulation {
-    boolean gravity_on=false, electrostatics_on=false;
+    boolean gravity_on=false, electrostatics_on=true;
     double t=0;
-    public double dt=0.1;
-    Body[] bodies;
+    public double dt=0.03;
+    public Body[] bodies;
     public BodyState[] states;
+
+    Simulation() {}
+
+    public Simulation(int n) {
+        bodies = new Body[n];
+        states = new BodyState[n];
+    }
 
     public void step() {
         t += dt;
@@ -20,7 +27,7 @@ public class Simulation {
         states = newStates;
     }
 
-    void dumpPositions() {
+    public void dumpPositions() {
         System.out.println("----\nt="+t);
         for (int i=0; i<states.length; ++i) {
             System.out.println(i+": "+states[i].position);
