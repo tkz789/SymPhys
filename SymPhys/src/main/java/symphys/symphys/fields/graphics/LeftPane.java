@@ -31,9 +31,18 @@ class LeftPane extends ScrollPane {
         Main.Test2.pauseSimulation();
         Main.Test2.simulation = simulation;
         Main.Test2.startSimulation();
+        pauseButton.setText("Pause");
     };
 
-    EventHandler<ActionEvent> pauseHandler = actionEvent -> Main.Test2.pauseSimulation();
+    EventHandler<ActionEvent> pauseHandler = actionEvent -> {
+        if (Main.Test2.paused) {
+            Main.Test2.unpauseSimulation();
+            pauseButton.setText("Pause");
+        } else {
+            Main.Test2.pauseSimulation();
+            pauseButton.setText("Unpause");
+        }
+    };
 
     LeftPane() {
         setMinWidth(250);
