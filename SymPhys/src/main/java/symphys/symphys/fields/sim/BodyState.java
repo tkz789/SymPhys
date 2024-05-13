@@ -29,8 +29,8 @@ public class BodyState {
     void applyForce(Wektor force, double dt) {
         Wektor dv = force.mul(dt/body.mass);
         // System.out.println("DEBUG: mass="+body.mass+" dx="+velocity.mul(dt).add(dv.mul(dt/2)));
-        if (!body.movableX) velocity = velocity.castY();
-        if (!body.movableY) velocity = velocity.castX();
+        if (!body.movableX) {velocity = velocity.castY(); dv = dv.castY();}
+        if (!body.movableY) {velocity = velocity.castX(); dv = dv.castX();}
         position = position.add(velocity.mul(dt)).add(dv.mul(dt/2));
         velocity = velocity.add(dv);
     }
