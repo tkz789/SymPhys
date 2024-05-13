@@ -9,58 +9,44 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class PendulumSimulation {
-    public static void startSimulation(Stage stage){
-        Slider lengthSlider=new Slider(50, 275, 175);
-        Slider gravitySlider=new Slider(0, 100, 9.81);
-        Slider initialAngleSlider=new Slider(0, 2*Math.PI, 1);
-        Label lengthLabel=new Label("Rod length: 175,00");
-        Label gravityLabel=new Label("Gravity: 9,81");
-        Label initialAngleLabel=new Label("Initial angle: 1,00");
-        VBox sliderBox=new VBox(10);
+    public static void startSimulation(Stage stage) {
+        Slider lengthSlider = new Slider(0.1, 2.75, 1.75);
+        Slider gravitySlider = new Slider(0, 100, 9.81);
+        Slider initialAngleSlider = new Slider(0, Math.PI / 2, 1);
+        Label lengthLabel = new Label("Rod length: 1.75 m");
+        Label gravityLabel = new Label("Gravity: 9.81 m/s^2");
+        Label initialAngleLabel = new Label("Initial angle: 1.00 rad");
+        VBox sliderBox = new VBox(10);
 
         lengthSlider.valueProperty().addListener(
-                new ChangeListener<Number>() {
-
-                    public void changed(ObservableValue<? extends Number > observable, Number oldValue, Number newValue)
-                    {
-                        lengthLabel.setText("Rod length: " + String.format("%.2f", newValue.doubleValue()));
-                    }
-                });
+                (observable, oldValue, newValue) -> lengthLabel.setText(String.format("Rod length: %.2f m", newValue.doubleValue())));
         gravitySlider.valueProperty().addListener(
-                new ChangeListener<Number>() {
-
-                    public void changed(ObservableValue<? extends Number > observable, Number oldValue, Number newValue)
-                    {
-                        gravityLabel.setText("Gravity: " + String.format("%.2f", newValue.doubleValue()));
-                    }
-                });
+                (observable, oldValue, newValue) -> gravityLabel.setText(String.format("Gravity: %.2f m/s^2", newValue.doubleValue())));
         initialAngleSlider.valueProperty().addListener(
-                new ChangeListener<Number>() {
+                (observable, oldValue, newValue) -> initialAngleLabel.setText(String.format("Initial angle: %.2f rad", newValue.doubleValue())));
 
-                    public void changed(ObservableValue<? extends Number > observable, Number oldValue, Number newValue)
-                    {
-                        initialAngleLabel.setText("Initial angle: " + String.format("%.2f", newValue.doubleValue()));
-                    }
-                });
-
-        EventHandler<ActionEvent> startButtonHandler=(e) -> {
-                PendulumAnimation animation = new PendulumAnimation(new SimplePendulum(lengthSlider.getValue(), gravitySlider.getValue(), initialAngleSlider.getValue()));
-                Group animationRoot = new Group(animation.rod, animation.bob);
-                animation.start();
-                Scene animationScene=new Scene(animationRoot, 500, 300);
-                stage.setScene(animationScene);
-                stage.show();
+        EventHandler<ActionEvent> startButtonHandler = (e) -> {
+            PendulumAnimation animation = new PendulumAnimation(new SimplePendulum(lengthSlider.getValue(), gravitySlider.getValue(), initialAngleSlider.getValue()));
+            Group animationRoot = new Group(animation.rod, animation.bob);
+            animation.start();
+            Scene animationScene = new Scene(animationRoot, 500, 300);
+            stage.setScene(animationScene);
+            stage.show();
         };
-        Button startButton=new Button("Start animation");
+        Button startButton = new Button("Start animation");
         startButton.setOnAction(startButtonHandler);
+        AnchorPane anchorPane = new AnchorPane();
 
         sliderBox.getChildren().addAll(lengthSlider, lengthLabel, gravitySlider, gravityLabel, initialAngleSlider, initialAngleLabel, startButton);
-
-        Group root = new Group(sliderBox);
+        AnchorPane.setTopAnchor(sliderBox, 50.);
+        AnchorPane.setLeftAnchor(sliderBox, 50.);
+        anchorPane.getChildren().add(sliderBox);
+        Group root = new Group(anchorPane);
         Scene scene = new Scene(root, 500, 300);
         stage.setScene(scene);
         stage.show();
