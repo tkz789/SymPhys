@@ -42,10 +42,10 @@ public class Main {
              graphicsHandler = new GraphicsHandler(stage);
         }
         public static void startSimulation() {
-            System.out.println("New simulation:");
+            /*System.out.println("New simulation:");
             for (Body body : simulation.bodies) {
                 System.out.println(body);
-            }
+            }*/
             timeline = new Timeline(new KeyFrame(Duration.seconds((simulation.dt)), e -> {
                 graphicsHandler.drawSimulation(simulation);
                 simulation.step();
