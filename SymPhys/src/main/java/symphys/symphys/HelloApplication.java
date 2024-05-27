@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 //import symphys.symphys.Doppler.Animate;
 import symphys.symphys.GivenForce.Main;
 import symphys.symphys.pendulum.PendulumSimulation;
@@ -19,6 +20,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
         stage.setTitle("SymPhys");
         Label simOptionsLabel = new Label("Choose the simulation:");
         Button pendulumButton = new Button("Pendulum simulation");
