@@ -1,5 +1,7 @@
 package symphys.symphys.fields.sim;
 
+import symphys.symphys.numerical.Wektor;
+
 public class Simulation {
     boolean gravity_on=false, electrostatics_on=true;
     double t=0;

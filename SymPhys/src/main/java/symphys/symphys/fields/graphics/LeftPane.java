@@ -8,7 +8,7 @@ import symphys.symphys.fields.Main;
 import symphys.symphys.fields.sim.Body;
 import symphys.symphys.fields.sim.BodyState;
 import symphys.symphys.fields.sim.Simulation;
-import symphys.symphys.fields.sim.Wektor;
+import symphys.symphys.numerical.Wektor;
 
 class LeftPane extends ScrollPane {
     VBox wrapper;

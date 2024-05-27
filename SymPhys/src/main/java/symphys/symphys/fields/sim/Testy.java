@@ -1,5 +1,7 @@
 package symphys.symphys.fields.sim;
 
+import symphys.symphys.numerical.Wektor;
+
 public class Testy {
     public static Simulation setuptest1() {
         Simulation simulation = new Simulation();

@@ -1,25 +1,25 @@
-package symphys.symphys.fields.sim;
+package symphys.symphys.numerical;
 
 import static java.lang.Math.sqrt;
 
 public class Wektor {
     private double x=0, y=0;
-    Wektor() {}
+    public Wektor() {}
     public Wektor(double x, double y) {
         this.x = x;
         this.y = y;
     }
-    Wektor add(Wektor w) {
+    public Wektor add(Wektor w) {
         return new Wektor(x+w.x, y+w.y);
     }
-    Wektor sub(Wektor w) {
+    public Wektor sub(Wektor w) {
         return new Wektor(x-w.x, y-w.y);
     }
-    Wektor mul(double a) {
+    public Wektor mul(double a) {
         return new Wektor(x*a, y*a);
     }
 
-    Wektor normalize() {
+    public Wektor normalize() {
         if ((x==0)&&(y==0)) throw new RuntimeException("Attempting to normalize a null vector.");
         return mul(1/length());
     }
@@ -35,15 +35,15 @@ public class Wektor {
         return y;
     }
 
-    Wektor castX() {
+    public Wektor castX() {
         return new Wektor(x, 0);
     }
 
-    Wektor castY() {
+    public Wektor castY() {
         return new Wektor(0, y);
     }
 
-    static double dist2(Wektor a, Wektor b) {
+    public static double dist2(Wektor a, Wektor b) {
         return (a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y);
     }
 
