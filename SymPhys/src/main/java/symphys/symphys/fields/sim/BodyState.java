@@ -1,5 +1,7 @@
 package symphys.symphys.fields.sim;
 
+import symphys.symphys.numerical.Wektor;
+
 import java.util.function.BiFunction;
 
 public class BodyState {

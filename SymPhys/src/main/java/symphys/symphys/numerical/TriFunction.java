@@ -1,4 +1,4 @@
-package symphys.symphys.GivenForce;
+package symphys.symphys.numerical;
 
 @FunctionalInterface
 public interface TriFunction<A,B,C,D> {

@@ -1,5 +1,7 @@
 package symphys.symphys.fields.sim;
 
+import symphys.symphys.numerical.Wektor;
+
 class Physics {
     static double G = 6.674301515151515e-11;
     static double k = 1/(4*Math.PI*8.8541878128131313e-12);
