@@ -1,7 +1,5 @@
 package symphys.symphys.fields.graphics;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
 public class DoubleField extends TextField {

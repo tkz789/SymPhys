@@ -4,7 +4,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import symphys.symphys.fields.sim.Simulation;
 import symphys.symphys.fields.vm.GSimState;
 
 public class GraphicsHandler {

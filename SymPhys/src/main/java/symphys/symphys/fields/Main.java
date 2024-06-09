@@ -4,7 +4,6 @@ import javafx.stage.Stage;
 import symphys.symphys.fields.vm.FieldsMain;
 
 public class Main {
-    static FieldsMain fm;
 
     public static void start(Stage stage) {
         // Test2.start();

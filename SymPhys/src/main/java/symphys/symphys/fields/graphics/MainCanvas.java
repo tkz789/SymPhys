@@ -3,8 +3,6 @@ package symphys.symphys.fields.graphics;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import symphys.symphys.fields.sim.BodyState;
-import symphys.symphys.fields.sim.Simulation;
 import symphys.symphys.fields.vm.GBody;
 import symphys.symphys.fields.vm.GSimState;
 
