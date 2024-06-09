@@ -3,45 +3,72 @@ package symphys.symphys.fields.graphics;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import symphys.symphys.fields.Main;
-import symphys.symphys.fields.sim.Body;
-import symphys.symphys.fields.sim.BodyState;
-import symphys.symphys.fields.sim.Simulation;
-import symphys.symphys.numerical.Wektor;
+import symphys.symphys.fields.vm.FieldsMain;
+import symphys.symphys.fields.vm.GBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 class LeftPane extends ScrollPane {
     VBox wrapper;
-    Button startButton, pauseButton;
+    HBox control_buttons;
+    Button startButton, pauseButton, stopButton;
     LeftPaneForm[] forms = new LeftPaneForm[4];
 
-    EventHandler<ActionEvent> startHandler = actionEvent -> {
-        // new simulation
-        Simulation simulation = new Simulation(forms.length);
-        for (int i=0; i<forms.length; ++i) {
-            simulation.bodies[i] = new Body();
-            simulation.states[i] = new BodyState(simulation.bodies[i]);
-            simulation.bodies[i].mass = Double.parseDouble(forms[i].massField.getText());
-            simulation.bodies[i].charge = Double.parseDouble(forms[i].chargeField.getText());
-            simulation.states[i].position = new Wektor(Double.parseDouble(forms[i].xField.getText()), Double.parseDouble(forms[i].yField.getText()));
-            simulation.states[i].velocity = new Wektor(Double.parseDouble(forms[i].vxField.getText()), Double.parseDouble(forms[i].vyField.getText()));
-            if (forms[i].xLocked.isSelected()) simulation.bodies[i].movableX = false;
-            if (forms[i].yLocked.isSelected()) simulation.bodies[i].movableY = false;
+    private void lock_state_input() {
+        for (LeftPaneForm form : forms)  {
+            form.lock();
         }
-        Main.Test2.pauseSimulation();
-        Main.Test2.simulation = simulation;
-        Main.Test2.startSimulation();
+    }
+
+    private void unlock_state_input() {
+        for (LeftPaneForm form : forms) {
+            form.unlock();
+        }
+    }
+
+    private void pause_sim() {
+        FieldsMain.pause_simulation();
+        unlock_state_input();
+        pauseButton.setText("Unpause");
+    }
+
+    private void play_sim() {
+        lock_state_input();
+        FieldsMain.play_simulation();
         pauseButton.setText("Pause");
+    }
+
+    private void init_sim() {
+        List<GBody> list = new ArrayList<>();
+        for (LeftPaneForm form : forms) {
+            try {
+                list.add(new GBody(form));
+            } catch (NumberFormatException ignored) {}
+        }
+        FieldsMain.init_simulation(list);
+        FieldsMain.draw_simulation();
+    }
+
+    EventHandler<ActionEvent> startHandler = actionEvent -> {
+        pause_sim();
+        init_sim();
+        play_sim();
     };
 
     EventHandler<ActionEvent> pauseHandler = actionEvent -> {
-        if (Main.Test2.paused) {
-            Main.Test2.unpauseSimulation();
-            pauseButton.setText("Pause");
+        if (FieldsMain.paused) {
+            play_sim();
         } else {
-            Main.Test2.pauseSimulation();
-            pauseButton.setText("Unpause");
+            pause_sim();
         }
+    };
+
+    EventHandler<ActionEvent> stopHandler = actionEvent -> {
+        pause_sim();
+        init_sim();
     };
 
     LeftPane() {
@@ -50,10 +77,12 @@ class LeftPane extends ScrollPane {
         setContent(wrapper);
         startButton = new Button("Start");
         pauseButton = new Button("Pause");
-        wrapper.getChildren().add(startButton);
-        wrapper.getChildren().add(pauseButton);
+        stopButton = new Button("Stop");
+        control_buttons = new HBox(startButton, pauseButton, stopButton);
+        wrapper.getChildren().add(control_buttons);
         startButton.setOnAction(startHandler);
         pauseButton.setOnAction(pauseHandler);
+        stopButton.setOnAction(stopHandler);
         for (int i=0; i<forms.length; ++i) {
             forms[i] = new LeftPaneForm(i);
             wrapper.getChildren().add(forms[i]);
@@ -61,29 +90,3 @@ class LeftPane extends ScrollPane {
     }
 }
 
-class LeftPaneForm extends VBox {
-    int bodyId;
-    TextField xField, yField, vxField, vyField, massField, chargeField;
-    CheckBox xLocked, yLocked;
-
-    LeftPaneForm(int bodyId) {
-        super(5);
-        this.bodyId = bodyId;
-        xField = new TextField("0");
-        yField = new TextField("0");
-        vxField = new TextField("0");
-        vyField = new TextField("0");
-        massField = new TextField("1");
-        chargeField = new TextField("0");
-        xLocked = new CheckBox("locked X");
-        yLocked = new CheckBox("locked Y");
-        getChildren().addAll(new Separator(), new Label("Body "+(bodyId+1)+":"),
-                new Label("x0 [m]:"), xField,
-                new Label("y0 [m]:"), yField,
-                new Label("vx0 [m/s]:"), vxField,
-                new Label("vy0 [m/s]:"), vyField,
-                new Label("Mass [kg]:"), massField,
-                new Label("Charge [C]:"), chargeField,
-                xLocked, yLocked);
-    }
-}
