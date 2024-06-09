@@ -1,6 +1,6 @@
 package symphys.symphys;
 
-import javax.sound.sampled.Control;
+import javafx.scene.control.Control;
 import java.util.List;
 
 public interface SimulationFactory{
