@@ -21,12 +21,14 @@ class LeftPane extends ScrollPane {
         for (LeftPaneForm form : forms)  {
             form.lock();
         }
+        GraphicsHandler.rightPane.setLocked(true);
     }
 
     private void unlock_state_input() {
         for (LeftPaneForm form : forms) {
             form.unlock();
         }
+        GraphicsHandler.rightPane.setLocked(false);
     }
 
     private void pause_sim() {
@@ -49,6 +51,8 @@ class LeftPane extends ScrollPane {
             } catch (NumberFormatException ignored) {}
         }
         FieldsMain.init_simulation(list);
+        FieldsMain.setG(GraphicsHandler.rightPane.constantsPane.getG());
+        FieldsMain.setK(GraphicsHandler.rightPane.constantsPane.getK());
         FieldsMain.draw_simulation();
     }
 

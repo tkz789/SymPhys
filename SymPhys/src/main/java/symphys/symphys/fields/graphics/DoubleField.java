@@ -3,9 +3,9 @@ package symphys.symphys.fields.graphics;
 import javafx.scene.control.TextField;
 
 public class DoubleField extends TextField {
-    LeftPaneForm parent;
+    Validable parent;
 
-    DoubleField (LeftPaneForm parent, String s) {
+    DoubleField (Validable parent, String s) {
         super(s);
         this.parent = parent;
         init();
@@ -19,7 +19,7 @@ public class DoubleField extends TextField {
             } catch (NumberFormatException e) {
                 setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             }
-            parent.update_validity();
+            if (parent!=null) parent.update_validity();
         });
     }
 

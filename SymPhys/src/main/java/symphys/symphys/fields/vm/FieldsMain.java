@@ -59,4 +59,12 @@ public class FieldsMain {
         timeline.pause();
     }
 
+    public static void setG(double G) {
+        simulation.G = G;
+    }
+
+    public static void setK(double k) {
+        simulation.k = k;
+    }
+
 }

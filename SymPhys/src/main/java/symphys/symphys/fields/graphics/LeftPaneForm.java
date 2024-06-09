@@ -6,7 +6,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.text.Text;
 import javafx.scene.layout.VBox;
 
-public class LeftPaneForm extends VBox {
+public class LeftPaneForm extends VBox implements Validable {
     int bodyId;
     public DoubleField xField, yField, vxField, vyField, massField, chargeField;
     public CheckBox xLocked, yLocked;
@@ -54,7 +54,7 @@ public class LeftPaneForm extends VBox {
         yLocked.setDisable(b);
     }
 
-    void update_validity() {
+    public void update_validity() {
         boolean valid=false;
         if (xField.isValid()) if (yField.isValid()) if (vxField.isValid()) if (vyField.isValid()) if (massField.isValid()) if (chargeField.isValid()) {
             valid = true;
