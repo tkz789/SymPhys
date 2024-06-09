@@ -1,14 +1,16 @@
 package symphys.symphys.fields.sim;
 
+import symphys.symphys.numerical.State;
 import symphys.symphys.numerical.Wektor;
 
 import java.util.function.BiFunction;
 
-public class BodyState {
+public class BodyState extends State {
     public Body body;
-    public Wektor position=new Wektor(), velocity =new Wektor();
+//    public Wektor position=new Wektor(), velocity =new Wektor();
 
     public BodyState(Body body) {
+        super(new Wektor(), new Wektor(), 0);
         this.body = body;
     }
 
