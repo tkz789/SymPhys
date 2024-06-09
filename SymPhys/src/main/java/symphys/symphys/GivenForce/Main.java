@@ -81,7 +81,6 @@ public class Main {
 
         Scene scene = new Scene(gridPane, 300, 600);
         stage.setScene(scene);
-        stage.setTitle("Function Parameters");
         stage.show();
         calculateButton.setOnAction(e -> {
             double a = Double.parseDouble(textFieldA.getText());
