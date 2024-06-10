@@ -20,11 +20,17 @@ public class GivenForceFactory implements SimulationFactory {
         for (String i: strings){
             if (i.equals("mass")){
                 sliders.put(i, new Slider(0.001, 10, 1));
-                labels.put(i, new Label(i + " 1"));
+                labels.put(i, new Label(i + " = 1"));
+                sliders.get(i).valueProperty().addListener((observable, old_value, new_value) -> labels.get(i).setText(
+                        String.format("%s = %.5s", i, new_value)
+                ));
                 continue;
             }
             sliders.put(i, new Slider(-1, 1, 0));
-            labels.put(i, new Label(i + " 0"));
+            labels.put(i, new Label(i + " = 0"));
+            sliders.get(i).valueProperty().addListener((observable, old_value, new_value) -> labels.get(i).setText(
+                    String.format("%s = %.5s", i, new_value)
+            ));
         }
     }
     List<Control> list = new ArrayList<>();
