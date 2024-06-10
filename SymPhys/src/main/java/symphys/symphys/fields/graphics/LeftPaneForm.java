@@ -1,20 +1,31 @@
 package symphys.symphys.fields.graphics;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.layout.VBox;
 
 public class LeftPaneForm extends VBox implements Validable {
-    int bodyId;
     public DoubleField xField, yField, vxField, vyField, massField, chargeField;
     public CheckBox xLocked, yLocked;
     private final Text invalidText = new Text("Invalid data.");
+    private final Button delButton = new Button("X");
+    private final Label bodyLabel = new Label();
+
+    EventHandler<ActionEvent> delHandler = actionEvent -> {
+        GraphicsHandler.leftPane.delForm(this);
+    };
 
     LeftPaneForm(int bodyId) {
         super(5);
-        this.bodyId = bodyId;
         xField = new DoubleField(this, "0");
         yField = new DoubleField(this, "0");
         vxField = new DoubleField(this, "0");
@@ -25,7 +36,16 @@ public class LeftPaneForm extends VBox implements Validable {
         yLocked = new CheckBox("locked Y");
         invalidText.setVisible(false);
         invalidText.setStyle("-fx-fill: red;");
-        getChildren().addAll(new Separator(), new Label("Body "+(bodyId+1)+":"),
+        updateLabel(bodyId);
+        delButton.setFont(new Font(10));
+        //delButton.setStyle("-fx-padding: 5px;");/*
+        /*delButton.prefWidthProperty().bind(delButton.heightProperty());
+        delButton.minWidthProperty().bind(delButton.heightProperty());
+        delButton.maxWidthProperty().bind(delButton.heightProperty());*/
+        delButton.setOnAction(delHandler);
+        HBox header = new HBox(100, bodyLabel, delButton);
+        header.setAlignment(Pos.CENTER_LEFT);
+        getChildren().addAll(new Separator(), header,
                 new Label("x0 [m]:"), xField,
                 new Label("y0 [m]:"), yField,
                 new Label("vx0 [m/s]:"), vxField,
@@ -60,5 +80,9 @@ public class LeftPaneForm extends VBox implements Validable {
             valid = true;
         }
         invalidText.setVisible(!valid);
+    }
+
+    void updateLabel(int id) {
+        bodyLabel.setText("Body "+id+":");
     }
 }

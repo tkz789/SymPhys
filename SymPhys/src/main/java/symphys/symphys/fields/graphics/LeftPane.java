@@ -1,7 +1,9 @@
 package symphys.symphys.fields.graphics;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -12,21 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 class LeftPane extends ScrollPane {
-    VBox wrapper;
+    VBox wrapper, formWrapper;
     HBox control_buttons;
-    Button startButton, pauseButton, stopButton;
-    LeftPaneForm[] forms = new LeftPaneForm[4];
+    Button startButton, pauseButton, stopButton, addFormButton;
+    Separator lastSeparator = new Separator();
 
     private void lock_state_input() {
-        for (LeftPaneForm form : forms)  {
-            form.lock();
+        for (Node form : formWrapper.getChildren())  {
+            ((LeftPaneForm) form).lock();
         }
         GraphicsHandler.rightPane.setLocked(true);
     }
 
     private void unlock_state_input() {
-        for (LeftPaneForm form : forms) {
-            form.unlock();
+        for (Node form : formWrapper.getChildren()) {
+            ((LeftPaneForm) form).unlock();
         }
         GraphicsHandler.rightPane.setLocked(false);
     }
@@ -45,9 +47,9 @@ class LeftPane extends ScrollPane {
 
     private void init_sim() {
         List<GBody> list = new ArrayList<>();
-        for (LeftPaneForm form : forms) {
+        for (Node form : formWrapper.getChildren()) {
             try {
-                list.add(new GBody(form));
+                list.add(new GBody((LeftPaneForm) form));
             } catch (NumberFormatException ignored) {}
         }
         FieldsMain.init_simulation(list);
@@ -56,6 +58,20 @@ class LeftPane extends ScrollPane {
         FieldsMain.setGravityOn(GraphicsHandler.rightPane.simSettingsPane.getGravityOn());
         FieldsMain.setElectrostaticsOn(GraphicsHandler.rightPane.simSettingsPane.getElectrostaticsOn());
         FieldsMain.draw_simulation();
+    }
+
+    private void reassignFormIds() {
+        int id=1;
+        for (Node node: formWrapper.getChildren()) {
+            if (!(node instanceof LeftPaneForm)) continue;
+            ((LeftPaneForm) node).updateLabel(id);
+            ++id;
+        }
+    }
+
+    void delForm(LeftPaneForm leftPaneForm) {
+        formWrapper.getChildren().remove(leftPaneForm);
+        reassignFormIds();
     }
 
     EventHandler<ActionEvent> startHandler = actionEvent -> {
@@ -77,21 +93,28 @@ class LeftPane extends ScrollPane {
         init_sim();
     };
 
+    EventHandler<ActionEvent> addFormHandler = actionEvent -> {
+        formWrapper.getChildren().add(new LeftPaneForm(0));
+        reassignFormIds();
+    };
+
     LeftPane() {
         setMinWidth(250);
         wrapper = new VBox(10);
+        formWrapper = new VBox(10);
         setContent(wrapper);
         startButton = new Button("Start");
         pauseButton = new Button("Pause");
         stopButton = new Button("Stop");
+        addFormButton = new Button("Add body");
         control_buttons = new HBox(startButton, pauseButton, stopButton);
-        wrapper.getChildren().add(control_buttons);
+        wrapper.getChildren().addAll(control_buttons, formWrapper, lastSeparator, addFormButton);
         startButton.setOnAction(startHandler);
         pauseButton.setOnAction(pauseHandler);
         stopButton.setOnAction(stopHandler);
-        for (int i=0; i<forms.length; ++i) {
-            forms[i] = new LeftPaneForm(i);
-            wrapper.getChildren().add(forms[i]);
+        addFormButton.setOnAction(addFormHandler);
+        for (int i=0; i<4; ++i) {
+            formWrapper.getChildren().add(new LeftPaneForm(i+1));
         }
     }
 }

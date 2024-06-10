@@ -22,8 +22,9 @@ class MainCanvas extends Canvas {
         context.setFill(Color.WHITE);
         context.fillRect(0, 0, getWidth(), getHeight());
         context.setFill(Color.BLACK);
+        double scale = GraphicsHandler.rightPane.simSettingsPane.getScale();
         for (GBody gbody: gSimState.gBodies) {
-            fillCircle(15*gbody.get_position().getX()+getWidth()/2, -15*gbody.get_position().getY()+getHeight()/2, 10);
+            fillCircle(scale*gbody.get_position().getX()+getWidth()/2, -scale*gbody.get_position().getY()+getHeight()/2, 10);
         }
     }
 }
