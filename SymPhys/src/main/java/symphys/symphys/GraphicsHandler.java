@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import java.util.List;
 
 public abstract class GraphicsHandler<T extends SimulationModel> {
-    T model;
+    protected T model;
     public GraphicsHandler(T model){
         this.model = model;
     }
