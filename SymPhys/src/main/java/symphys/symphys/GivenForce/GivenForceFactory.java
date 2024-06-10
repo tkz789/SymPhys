@@ -6,7 +6,6 @@ import symphys.symphys.SimulationFactory;
 
 import javafx.scene.control.Control;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
