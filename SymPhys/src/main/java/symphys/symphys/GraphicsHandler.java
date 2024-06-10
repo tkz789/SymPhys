@@ -4,7 +4,11 @@ import javafx.scene.Node;
 
 import java.util.List;
 
-public interface GraphicsHandler<T extends SimulationModel> {
-    public List<Node> getObjects();
-    public void drawSimulation(T model);
+public abstract class GraphicsHandler<T extends SimulationModel> {
+    T model;
+    public GraphicsHandler(T model){
+        this.model = model;
+    }
+    public abstract List<Node> getObjects();
+    public abstract void drawSimulation();
 }
