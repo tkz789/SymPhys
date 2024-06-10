@@ -4,26 +4,34 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import symphys.symphys.fields.sim.Simulation;
+import symphys.symphys.fields.vm.GSimState;
 
 public class GraphicsHandler {
-    Stage stage;
-    BorderPane mainPane;
-    MainCanvas mainCanvas;
-    LeftPane leftPane;
-    Scene mainScene;
-    Pane centerPane;
+    static Stage stage;
+    static BorderPane mainPane;
+    static MainCanvas mainCanvas;
+    static LeftPane leftPane;
+    static Scene mainScene;
+    static Pane centerPane;
+    static RightPane rightPane;
 
-    public GraphicsHandler(Stage stage) {
+    /*public GraphicsHandler(Stage stage) {
         this.stage = stage;
+        initStage();
+    }*/
+
+    public static void init(Stage stage) {
+        GraphicsHandler.stage = stage;
         initStage();
     }
 
-    private void initStage() {
+    private static void initStage() {
         stage.setTitle("SymPhys - Fields");
         mainPane = new BorderPane();
         leftPane = new LeftPane();
         mainPane.setLeft(leftPane);
+        rightPane = new RightPane();
+        mainPane.setRight(rightPane);
         mainCanvas = new MainCanvas();
         centerPane = new Pane(mainCanvas);
         mainPane.setCenter(centerPane);
@@ -35,7 +43,7 @@ public class GraphicsHandler {
         stage.show();
     }
 
-    public void drawSimulation(Simulation simulation) {
+    public static void drawSimulation(GSimState simulation) {
         mainCanvas.drawSimulation(simulation);
     }
 }
