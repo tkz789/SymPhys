@@ -53,6 +53,8 @@ class LeftPane extends ScrollPane {
         FieldsMain.init_simulation(list);
         FieldsMain.setG(GraphicsHandler.rightPane.constantsPane.getG());
         FieldsMain.setK(GraphicsHandler.rightPane.constantsPane.getK());
+        FieldsMain.setGravityOn(GraphicsHandler.rightPane.simSettingsPane.getGravityOn());
+        FieldsMain.setElectrostaticsOn(GraphicsHandler.rightPane.simSettingsPane.getElectrostaticsOn());
         FieldsMain.draw_simulation();
     }
 

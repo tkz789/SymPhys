@@ -67,4 +67,12 @@ public class FieldsMain {
         simulation.k = k;
     }
 
+    public static void setGravityOn(boolean b) {
+        simulation.gravity_on = b;
+    }
+
+    public static void setElectrostaticsOn(boolean b) {
+        simulation.electrostatics_on = b;
+    }
+
 }
