@@ -1,10 +1,8 @@
 package symphys.symphys.GivenForce;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import symphys.symphys.SimulationFactory;
-import symphys.symphys.SimulationModel;
 
 import javafx.scene.control.Control;
 

@@ -6,7 +6,6 @@ import symphys.symphys.numerical.State;
 import symphys.symphys.numerical.Wektor;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.function.Function;
 
 public class GivenForceModel implements SimulationModel {

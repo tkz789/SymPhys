@@ -3,7 +3,6 @@ package symphys.symphys.GivenForce;
 import javafx.scene.Node;
 import javafx.scene.shape.Circle;
 import symphys.symphys.GraphicsHandler;
-import symphys.symphys.SimulationModel;
 import symphys.symphys.numerical.Wektor;
 
 import java.util.ArrayList;
