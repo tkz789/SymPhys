@@ -14,7 +14,7 @@ public class GivenForceGraphicsHandler extends GraphicsHandler<GivenForceModel> 
     GivenForceGraphicsHandler(GivenForceModel model){
         super(model);
         Wektor position = model.getPositions();
-        nodes.add(new Circle(position.getX(), position.getY(), 10));
+        nodes.add(new Circle(position.getX() + 100, position.getY() + 100, 10));
     }
     List<Node> nodes = new ArrayList<>();
     @Override
@@ -25,5 +25,7 @@ public class GivenForceGraphicsHandler extends GraphicsHandler<GivenForceModel> 
     @Override
     public void drawSimulation() {
         model.step(0.01);
+        ((Circle) nodes.get(0)).setCenterX(model.state.position.getX() + nodes.get(0).getScene().getWidth()/2);
+        ((Circle) nodes.get(0)).setCenterY(model.state.position.getY() + nodes.get(0).getScene().getHeight()/2);
     }
 }

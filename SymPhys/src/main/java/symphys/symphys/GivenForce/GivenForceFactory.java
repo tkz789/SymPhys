@@ -14,28 +14,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GivenForceFactory implements SimulationFactory {
-    Label Force = new Label("Enter parameters to start.\n F_x =  a + bx + cy \n F_y = d + ex + fy");
+    Label Force = new Label("Enter parameters to start.\n F_x =  a + b*x + c*v_y \n F_y = d + e*v_x + f*y");
     String [] strings = {"a", "b", "c", "d", "e", "f", "x", "y", "v_x", "v_y", "mass"};
-//    TextField textFieldA = new TextField("0.0");
-//    TextField textFieldB = new TextField("-0.000002");
-//    TextField textFieldC = new TextField("0.0");
-//    TextField textFieldD = new TextField("0.0");
-//    TextField textFieldE = new TextField("0.0");
-//    TextField textFieldF = new TextField("-0.000002");
-//    TextField textFieldVx = new TextField("0.1");
-//    TextField textFieldVy = new TextField("0.0");
-//    TextField textFieldX = new TextField("0.0");
-//    TextField textFieldY = new TextField("150.0");
-    HashMap<String,Label> labels;
-    {
-        for (String i : strings){
-            labels.put(i, new Label(i));
-        }
-    }
-    HashMap<String,Slider> sliders;
+    HashMap<String,Label> labels = new HashMap<>();
+    HashMap<String,Slider> sliders = new HashMap<>();
     {
         for (String i: strings){
+            if (i.equals("mass")){
+                sliders.put(i, new Slider(0.001, 10, 1));
+                labels.put(i, new Label(i + " 1"));
+                continue;
+            }
             sliders.put(i, new Slider(-1, 1, 0));
+            labels.put(i, new Label(i + " 0"));
         }
     }
     List<Control> list = new ArrayList<>();
@@ -43,7 +34,7 @@ public class GivenForceFactory implements SimulationFactory {
         list.add(Force);
         for (String i: strings){
             list.add(labels.get(i));
-            list.add(labels.get(i));
+            list.add(sliders.get(i));
         }
     }
     @Override

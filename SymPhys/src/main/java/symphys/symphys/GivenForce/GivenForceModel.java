@@ -18,9 +18,9 @@ public class GivenForceModel implements SimulationModel {
 
     GivenForceModel(HashMap<String, Double> param){
         this.param = param;
-        state = new State(new Wektor(param.get("x")*100, param.get("y")*100), new Wektor(param.get("v_x"), param.get("v_y")),0);
-        force = state -> new Wektor(param.get("a") + param.get("b") * state.position.getX() + param.get("c")* state.position.getY(),
-                param.get("d") + param.get("e") * state.position.getX() + param.get("f") * state.position.getY());
+        state = new State(new Wektor(param.get("x")*300, param.get("y")*300), new Wektor(param.get("v_x")*300, param.get("v_y")*300),0);
+        force = state -> new Wektor(param.get("a") + param.get("b") * state.position.getX() + param.get("c")* state.velocity.getY(),
+                param.get("d") + param.get("e") * state.velocity.getX() + param.get("f") * state.position.getY());
     }
     @Override
     public void step(double time) {

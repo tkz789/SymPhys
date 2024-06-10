@@ -7,14 +7,14 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-//import symphys.symphys.Doppler.Animate;
 import javafx.util.Duration;
-import symphys.symphys.GivenForce.Main;
-import symphys.symphys.pendulum.PendulumModel;
-import symphys.symphys.pendulum.PendulumSimulation;
+import symphys.symphys.GivenForce.GivenForceFactory;
+import symphys.symphys.fields.Main;
 import symphys.symphys.pendulum.SimplePendulumFactory;
 import symphys.symphys.pendulum.SpringPendulumFactory;
 
@@ -47,23 +47,31 @@ public class HelloApplication extends Application {
         Button electricFieldButton = new Button("Electric field simulation"){
             public void fire(){
                 //factory = new SimplePendulumFactory();
-                simulate(stage);
+                Main.start(stage);
             }
         };
         Button givenForceButton = new Button("Given force simulation"){
             public void fire(){
-                //factory = new GivenForceFactory();
+                factory = new GivenForceFactory();
                 simulate(stage);
             }
         };
         VBox optionsBox = new VBox(10, simOptionsLabel, simplePendulumButton, springPendulumButton, electricFieldButton, givenForceButton);
-        Scene scene = new Scene(optionsBox, 500, 300);
+        AnchorPane.setTopAnchor(optionsBox, 10.);
+        AnchorPane.setLeftAnchor(optionsBox, 10.);
+        AnchorPane pane = new AnchorPane(optionsBox);
+        Scene scene = new Scene(pane, 500, 300);
         stage.setScene(scene);
         stage.show();
     }
+
     public void simulate(Stage stage){
         VBox box = ControlsView.createVBox(factory.getControls());
-        Group root = new Group(box);
+        AnchorPane.setLeftAnchor(box, 10.);
+        AnchorPane.setTopAnchor(box, 10.);
+        AnchorPane anchorPane = new AnchorPane(box);
+
+        Group root = new Group(anchorPane);
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds((0.01)), e -> {
             graphicsHandler.drawSimulation();
@@ -104,15 +112,18 @@ public class HelloApplication extends Application {
                 }
             }
         };
-        root.getChildren().addAll(startButton, stopButton, backButton);
-        startButton.setVisible(true);
-        startButton.setLayoutX(400);
-        startButton.setLayoutY(150);
-        stopButton.setLayoutX(400);
-        stopButton.setLayoutY(180);
-        backButton.setLayoutX(400);
-        backButton.setLayoutY(260);
+
+        HBox buttonBox = new HBox(10, startButton, stopButton, backButton);
+        AnchorPane.setLeftAnchor(buttonBox, 10.);
+        AnchorPane anchorPane2 = new AnchorPane(buttonBox);
+        VBox rootBox = new VBox(10, anchorPane, anchorPane2);
+        root.getChildren().add(rootBox);
+
         Scene scene = new Scene(root, 500, 300);
+
+        rootBox.prefWidthProperty().bind(scene.widthProperty());
+        rootBox.prefHeightProperty().bind(scene.heightProperty());
+
         stage.setScene(scene);
         stage.show();
     }

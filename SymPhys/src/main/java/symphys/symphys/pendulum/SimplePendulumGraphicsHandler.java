@@ -17,8 +17,8 @@ public class SimplePendulumGraphicsHandler extends PendulumGraphicsHandler{
     }
     @Override
     public void drawSimulation(){
-        bob.setCenterX(model.bob.position.getX()+250); bob.setCenterY(model.bob.position.getY());
-        line.setStartX(250); line.setStartY(0);
+        bob.setCenterX(model.bob.position.getX() + bob.getScene().getWidth()/2); bob.setCenterY(model.bob.position.getY());
+        line.setStartX(bob.getScene().getWidth()/2); line.setStartY(0);
         line.setEndX(bob.getCenterX()); line.setEndY(bob.getCenterY());
     }
     @Override
