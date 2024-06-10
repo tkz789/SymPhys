@@ -14,7 +14,7 @@ public class RightPane extends ScrollPane {
         setMaxWidth(250);
         accordion = new Accordion(simSettingsPane, constantsPane);
         setContent(accordion);
-    }
+    }//
 
     void setLocked(boolean b) {
         simSettingsPane.setLocked(b);
