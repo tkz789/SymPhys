@@ -1,8 +1,12 @@
 package symphys.symphys.pendulum;
 
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.VBox;
+import symphys.symphys.GraphicsHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimplePendulumFactory extends PendulumFactory{
 
@@ -15,7 +19,8 @@ public class SimplePendulumFactory extends PendulumFactory{
         Label initialAngleLabel=new Label("Initial angle: 1,00 rad");
         Label dampingLabel=new Label("No damping");
 
-        public void showParameterChoice(VBox box){
+        @Override
+        public List<Control> getControls(){
             lengthSlider.valueProperty().addListener(
                     (observable, oldValue, newValue) -> lengthLabel.setText(String.format("Rod length: %.2f cm", newValue.doubleValue())));
             gravitySlider.valueProperty().addListener(
@@ -29,11 +34,18 @@ public class SimplePendulumFactory extends PendulumFactory{
                         else
                             dampingLabel.setText(String.format("Dumping factor: %.3f", newValue.doubleValue()));
                     });
-            box.getChildren().addAll(lengthSlider, lengthLabel, gravitySlider, gravityLabel, initialAngleSlider, initialAngleLabel, dampingSlider, dampingLabel);
+            ArrayList<Control> list = new ArrayList<>();
+            list.add(lengthSlider); list.add(lengthLabel); list.add(gravitySlider); list.add(gravityLabel); list.add(initialAngleSlider); list.add(initialAngleLabel); list.add(dampingSlider); list.add(dampingLabel);
+            return list;
         }
 
         @Override
-        public SimplePendulum createPendulum() {
-            return new SimplePendulum(new SimplePendulumCalculator(lengthSlider.getValue(), gravitySlider.getValue(), initialAngleSlider.getValue(), dampingSlider.getValue()), new SimplePendulumBody());
+        public PendulumModel getModel() {
+            return new PendulumModel(new SimplePendulumCalculator(lengthSlider.getValue(), gravitySlider.getValue(), initialAngleSlider.getValue(), dampingSlider.getValue()));
+        }
+
+        @Override
+        public SimplePendulumGraphicsHandler getGraphicsHandler(){
+            return new SimplePendulumGraphicsHandler(getModel());
         }
 }

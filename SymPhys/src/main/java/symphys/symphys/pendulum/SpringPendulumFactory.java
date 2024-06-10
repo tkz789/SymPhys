@@ -1,8 +1,13 @@
 package symphys.symphys.pendulum;
 
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
+import symphys.symphys.GraphicsHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpringPendulumFactory extends PendulumFactory {
     Slider lengthSlider=new Slider(50, 150, 100);
@@ -17,7 +22,7 @@ public class SpringPendulumFactory extends PendulumFactory {
         coilSlider.setBlockIncrement(1);
     }
 
-    public void showParameterChoice(VBox box){
+    public List<Control> getControls(){
         lengthSlider.valueProperty().addListener(
                 (observable, oldValue, newValue) -> lengthLabel.setText(String.format("Rod length: %.2f cm", newValue.doubleValue())));
         massSlider.valueProperty().addListener(
@@ -26,11 +31,18 @@ public class SpringPendulumFactory extends PendulumFactory {
                 (observable, oldValue, newValue) -> springLabel.setText(String.format("Spring constant: %.2f", newValue.doubleValue())));
         coilSlider.valueProperty().addListener(
                 (observable, oldValue, newValue) -> coilLabel.setText(String.format("Coil count: %d", newValue.intValue())));
-        box.getChildren().addAll(lengthSlider, lengthLabel, massSlider, massLabel, springSlider, springLabel, coilSlider, coilLabel);
+        ArrayList<Control> list = new ArrayList<>();
+        list.add(lengthSlider); list.add(lengthLabel); list.add(massSlider); list.add(massLabel); list.add(springSlider);  list.add(springLabel); list.add(coilSlider); list.add(coilLabel);
+        return list;
     }
 
     @Override
-    public SpringPendulum createPendulum() {
-        return new SpringPendulum(new SpringPendulumCalculator(lengthSlider.getValue(), massSlider.getValue(), springSlider.getValue()), new SpringPendulumBody((int)coilSlider.getValue()));
+    public PendulumModel getModel() {
+        return new PendulumModel(new SpringPendulumCalculator(lengthSlider.getValue(), massSlider.getValue(), springSlider.getValue()));
+    }
+
+    @Override
+    public GraphicsHandler getGraphicsHandler(){
+        return new SpringPendulumGraphicsHandler(getModel(), (int)coilSlider.getValue());
     }
 }

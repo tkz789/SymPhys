@@ -1,0 +1,18 @@
+Index: SymPhys/src/main/java/symphys/symphys/pendulum/PendulumSimulation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package symphys.symphys.pendulum;\r\n\r\nimport javafx.beans.value.ChangeListener;\r\nimport javafx.beans.value.ObservableValue;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.event.EventHandler;\r\nimport javafx.scene.Group;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.Slider;\r\nimport javafx.scene.layout.AnchorPane;\r\nimport javafx.scene.layout.VBox;\r\nimport javafx.stage.Stage;\r\n\r\npublic class PendulumSimulation {\r\n    public static void startSimulation(Stage stage) {\r\n        Slider lengthSlider = new Slider(0.1, 2.75, 1.75);\r\n        Slider gravitySlider = new Slider(0, 100, 9.81);\r\n        Slider initialAngleSlider = new Slider(0, Math.PI / 2, 1);\r\n        Label lengthLabel = new Label(\"Rod length: 1.75 m\");\r\n        Label gravityLabel = new Label(\"Gravity: 9.81 m/s^2\");\r\n        Label initialAngleLabel = new Label(\"Initial angle: 1.00 rad\");\r\n        VBox sliderBox = new VBox(10);\r\n\r\n        lengthSlider.valueProperty().addListener(\r\n                (observable, oldValue, newValue) -> lengthLabel.setText(String.format(\"Rod length: %.2f m\", newValue.doubleValue())));\r\n        gravitySlider.valueProperty().addListener(\r\n                (observable, oldValue, newValue) -> gravityLabel.setText(String.format(\"Gravity: %.2f m/s^2\", newValue.doubleValue())));\r\n        initialAngleSlider.valueProperty().addListener(\r\n                (observable, oldValue, newValue) -> initialAngleLabel.setText(String.format(\"Initial angle: %.2f rad\", newValue.doubleValue())));\r\n\r\n        EventHandler<ActionEvent> startButtonHandler = (e) -> {\r\n            PendulumAnimation animation = new PendulumAnimation(new SimplePendulum(lengthSlider.getValue(), gravitySlider.getValue(), initialAngleSlider.getValue()));\r\n            Group animationRoot = new Group(animation.rod, animation.bob);\r\n            animation.start();\r\n            Scene animationScene = new Scene(animationRoot, 500, 300);\r\n            stage.setScene(animationScene);\r\n            stage.show();\r\n        };\r\n        Button startButton = new Button(\"Start animation\");\r\n        startButton.setOnAction(startButtonHandler);\r\n        AnchorPane anchorPane = new AnchorPane();\r\n\r\n        sliderBox.getChildren().addAll(lengthSlider, lengthLabel, gravitySlider, gravityLabel, initialAngleSlider, initialAngleLabel, startButton);\r\n        AnchorPane.setTopAnchor(sliderBox, 50.);\r\n        AnchorPane.setLeftAnchor(sliderBox, 50.);\r\n        anchorPane.getChildren().add(sliderBox);\r\n        Group root = new Group(anchorPane);\r\n        Scene scene = new Scene(root, 500, 300);\r\n        stage.setScene(scene);\r\n        stage.show();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SymPhys/src/main/java/symphys/symphys/pendulum/PendulumSimulation.java b/SymPhys/src/main/java/symphys/symphys/pendulum/PendulumSimulation.java
+--- a/SymPhys/src/main/java/symphys/symphys/pendulum/PendulumSimulation.java	(revision ffbf846b3763a894acd349fb64d512b793cc7925)
++++ b/SymPhys/src/main/java/symphys/symphys/pendulum/PendulumSimulation.java	(date 1717961996234)
+@@ -11,6 +11,7 @@
+ import javafx.scene.control.Slider;
+ import javafx.scene.layout.AnchorPane;
+ import javafx.scene.layout.VBox;
++
+ import javafx.stage.Stage;
+ 
+ public class PendulumSimulation {
