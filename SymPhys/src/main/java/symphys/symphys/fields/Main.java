@@ -1,24 +1,20 @@
 package symphys.symphys.fields;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import symphys.symphys.fields.graphics.GraphicsHandler;
-import symphys.symphys.fields.graphics.TestGraphicsHandler;
-import symphys.symphys.fields.sim.Body;
-import symphys.symphys.fields.sim.Simulation;
-import symphys.symphys.fields.sim.Testy;
+import symphys.symphys.fields.vm.FieldsMain;
 
 public class Main {
-    static Stage stage;
 
     public static void start(Stage stage) {
-        Main.stage = stage;
-        Test2.start();
+        // Test2.start();
+        m3(stage);
     }
 
-    private static void test1() {
+    private static void m3(Stage stage) {
+        FieldsMain.init(stage);
+    }
+
+    /*private static void test1() {
         TestGraphicsHandler testGraphicsHandler = new TestGraphicsHandler(stage);
         testGraphicsHandler.init();
         Simulation simulation = Testy.setuptest1();
@@ -46,7 +42,7 @@ public class Main {
             /*System.out.println("New simulation:");
             for (Body body : simulation.bodies) {
                 System.out.println(body);
-            }*/
+            }*//*
             timeline = new Timeline(new KeyFrame(Duration.seconds((simulation.dt)), e -> {
                 graphicsHandler.drawSimulation(simulation);
                 simulation.step();
@@ -66,5 +62,5 @@ public class Main {
             timeline.play();
             paused = false;
         }
-    }
+    }*/
 }
