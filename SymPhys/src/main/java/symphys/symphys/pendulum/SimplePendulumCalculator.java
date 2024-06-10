@@ -1,5 +1,7 @@
 package symphys.symphys.pendulum;
 
+import symphys.symphys.numerical.Wektor;
+
 import java.awt.geom.Point2D;
 import static java.lang.Math.*;
 
@@ -42,10 +44,10 @@ public class SimplePendulumCalculator extends PendulumCalculator{
 
     }
 
-    public Point2D.Double position(double time){
+    public Wektor position(double time){
         double theta = angle(time);
         double x = length * sin(theta);
         double y = length * cos(theta);
-        return new Point2D.Double(x, y);
+        return new Wektor(x, y);
     }
 }

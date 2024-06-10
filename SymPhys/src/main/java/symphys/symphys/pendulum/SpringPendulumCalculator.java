@@ -1,5 +1,7 @@
 package symphys.symphys.pendulum;
 
+import symphys.symphys.numerical.Wektor;
+
 import java.awt.geom.Point2D;
 
 public class SpringPendulumCalculator extends PendulumCalculator{
@@ -16,9 +18,9 @@ public class SpringPendulumCalculator extends PendulumCalculator{
     }
 
     @Override
-    public Point2D.Double position(double time) {
+    public Wektor position(double time) {
         double omega = Math.sqrt(spring/mass);
         double y = length*Math.cos(omega * time) + initialVelocity*Math.sin(omega * time);
-        return new Point2D.Double(0, y+length);
+        return new Wektor(0, y+length);
     }
 }
