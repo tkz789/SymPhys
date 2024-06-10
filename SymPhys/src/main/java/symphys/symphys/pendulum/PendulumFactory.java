@@ -1,8 +1,13 @@
 package symphys.symphys.pendulum;
 
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Control;
+import symphys.symphys.GraphicsHandler;
+import symphys.symphys.SimulationFactory;
 
-public abstract class PendulumFactory {
-    public abstract Pendulum createPendulum();
-    public abstract void showParameterChoice(VBox box);
+import java.util.List;
+
+public abstract class PendulumFactory implements SimulationFactory {
+    public abstract PendulumModel getModel();
+    public abstract List<Control> getControls();
+    public abstract GraphicsHandler<PendulumModel> getGraphicsHandler();
 }
